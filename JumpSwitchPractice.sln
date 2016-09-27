@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{C3E09A08-35CF-11D1-5076-D8B6B84D7754}") = "JumpSwitchPractice", "Assembly-CSharp-firstpass.csproj", "{E6EEDFC9-0C54-6B2A-23B6-BBBBF68D8B30}"
+EndProject
+Project("{C3E09A08-35CF-11D1-5076-D8B6B84D7754}") = "JumpSwitchPractice", "Assembly-CSharp.csproj", "{5CE3DD9D-36CE-338C-E1A8-47B23A840EB6}"
+EndProject
+Project("{C3E09A08-35CF-11D1-5076-D8B6B84D7754}") = "JumpSwitchPractice", "Assembly-CSharp-Editor.csproj", "{E28F3B7C-3097-9B08-5393-F80A6C60D504}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6EEDFC9-0C54-6B2A-23B6-BBBBF68D8B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6EEDFC9-0C54-6B2A-23B6-BBBBF68D8B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6EEDFC9-0C54-6B2A-23B6-BBBBF68D8B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6EEDFC9-0C54-6B2A-23B6-BBBBF68D8B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE3DD9D-36CE-338C-E1A8-47B23A840EB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE3DD9D-36CE-338C-E1A8-47B23A840EB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE3DD9D-36CE-338C-E1A8-47B23A840EB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE3DD9D-36CE-338C-E1A8-47B23A840EB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E28F3B7C-3097-9B08-5393-F80A6C60D504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E28F3B7C-3097-9B08-5393-F80A6C60D504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E28F3B7C-3097-9B08-5393-F80A6C60D504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E28F3B7C-3097-9B08-5393-F80A6C60D504}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
