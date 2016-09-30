@@ -11,8 +11,27 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 3;
     public float jumpHeight = 2;
 
+    // For getting postions for OverlapAreaAll. Need the game object reference.
+    public GameObject topLeftObject;
+    public GameObject bottomRightObject;
+
+    // For Projectile firing
+    public Transform firePosition; // The position it fires from
+    public GameObject projectile; // The projectile itself
+
     private CharacterController2D controller; // variable controller accesses public CharacterController2D members
     private AnimationController2D animator; // variable animator accesses public AnimationController2D memebers
+
+    // Set the postions of the objects to these.
+    private Vector2 topLeftPosition;
+    private Vector2 bottomRightPosition;
+
+    // For dimension switching
+    private bool inDarkDimension; // To tell what dimension we're currently in
+    private int darkLayerMask;
+    private int lightLayerMask;
+    private Collider2D[] cacheDarkHitColliders;
+    private Collider2D[] cacheLightHitColliders;
 
 
     // Use this for initialization
@@ -22,6 +41,20 @@ public class PlayerController : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController2D>(); // initialize for access to CharacterController2D
         animator = gameObject.GetComponent<AnimationController2D>(); // initialize for access to AnimationController2D
         mainCamera.GetComponent<CameraFollow2D>().startCameraFollow(this.gameObject); // Will set the camera to start following the player
+
+        topLeftPosition = topLeftObject.transform.position; // Position of top left object
+        bottomRightPosition = bottomRightObject.transform.position; // Position of bottom right object
+
+        inDarkDimension = true; // Start in dark dimension
+        darkLayerMask = 1 << LayerMask.NameToLayer("DarkDimensionPlatform"); // Holds int mask of dark dimension platform
+        lightLayerMask = 1 << LayerMask.NameToLayer("LightDimensionPlatform"); // Holds int mask of light dimension platform
+
+        // Initial overlap of the map. Saves all the colliders. It's not dynamic, so these are used again in the DarkDimension and LightDimension functions.
+        cacheLightHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightLayerMask); // Saves light dimension hit colliders
+        cacheDarkHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkLayerMask); // Saves dark dimension hit coliiders
+
+        DarkDimension(true); // Start in dark dimension
+        LightDimension(false);
     }
 	
 	// Update is called once per frame
@@ -76,5 +109,54 @@ public class PlayerController : MonoBehaviour
         // Movement being applied to the player. the move() function is from the CharacterController2D script
         controller.move(velocity * Time.deltaTime); // Time.deltaTime removes inconsistency due to frame-rate
 
+        // For firing projectile
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
+        }
+
+        // For switching dimensions
+        if (Input.GetKeyDown(KeyCode.W) == true)
+        {
+            if (inDarkDimension == true) // In dark dimension
+            {
+                LightDimension(true); // Activate light dimension
+                DarkDimension(false); // Deactivate dark dimension
+                inDarkDimension = false; // Switch bool
+            }
+            else if (inDarkDimension == false) // In light dimension
+            {
+                DarkDimension(true); // Activate dark dimension
+                LightDimension(false); // Deactivate light dimension
+                inDarkDimension = true; // Switch bool
+            }
+        }
+
+    }
+
+    private void DarkDimension(bool activeOrDeactive)
+    {
+        foreach (Collider2D el in cacheDarkHitColliders)
+        {
+            el.gameObject.SetActive(activeOrDeactive); // Will either activate or deactivate the dark dimension
+        }
+
+        // Creates the area overlap and returns all the colliders on a certain layer in the area.
+        // Might need to try using OverlapAreaNonAlloc if it's too inefficient.
+        // If we have moving platforms it will save the last state it was in.
+        cacheLightHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightLayerMask); // Saves light dimension hit colliders
+    }
+
+    private void LightDimension(bool activeOrDeactive)
+    {
+        foreach (Collider2D el in cacheLightHitColliders)
+        {
+            el.gameObject.SetActive(activeOrDeactive); // Will either activate or deactivate the light dimension
+        }
+
+        // Creates the area overlap and returns all the colliders on a certain layer in the area.
+        // Might need to try using OverlapAreaNonAlloc if it's too inefficient.
+        // If we have moving platforms it will save the last state it was in.
+        cacheDarkHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkLayerMask); // Saves dark dimension hit coliiders
     }
 }

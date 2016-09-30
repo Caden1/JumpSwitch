@@ -95,11 +95,11 @@ public class CharacterController2D : MonoBehaviour
 	/// </summary>
 	public LayerMask triggerMask = 0;
 
-	/// <summary>
-	/// mask with all layers that should act as one-way platforms. Note that one-way platforms should always be EdgeCollider2Ds. This is because it does not support being
-	/// updated anytime outside of the inspector for now.
-	/// </summary>
-	[SerializeField]
+    /// <summary>
+    /// mask with all layers that should act as one-way platforms. Note that one-way platforms should always be EdgeCollider2Ds. This is because it does not support being
+    /// updated anytime outside of the inspector for now.
+    /// </summary>
+    [SerializeField]
 	LayerMask oneWayPlatformMask = 0;
 
 	/// <summary>
