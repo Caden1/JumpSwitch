@@ -15,6 +15,8 @@ public class ProjectileController : MonoBehaviour
         {
             speed = -speed; // Shoot the projectile to the left
         }
+
+		//Destroy (gameObject, 2); // Destroy projectile after 2 seconds
 	}
 	
 	// Update is called once per frame
@@ -22,9 +24,25 @@ public class ProjectileController : MonoBehaviour
     {
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed, GetComponent<Rigidbody2D>().velocity.y); // Makes the projectile move at speed specified
 	}
-
-    void OnTriggerEnter2D(Collider2D other)
+		
+	void OnTriggerEnter2D(Collider2D other) // Collision not being detected
     {
-        Destroy(gameObject); // Destroys the projectile
+		Debug.Log ("Hit");
+		if (other.tag == "Wall") 
+		{
+			//Debug.Log ("Hit");
+			Destroy(gameObject); // Destroys the projectile
+		}
     }
+	/*
+	void OnCollisionEnter2D(Collision2D coll) // Collision not being detected
+	{
+		Debug.Log ("Hit");
+		if (coll.gameObject.name == "Wall") 
+		{
+			//Debug.Log ("Hit");
+			Destroy(gameObject); // Destroys the projectile
+		}
+	}
+	*/
 }
