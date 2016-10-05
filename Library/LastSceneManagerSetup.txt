@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/PracticeScene.unity
+- path: Assets/_Scenes/Level02.unity
   isLoaded: 1
   isActive: 1
