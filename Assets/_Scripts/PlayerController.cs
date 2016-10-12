@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Prime31; // For access to CharacterController2D
+using UnityEngine.SceneManagement; // Needed for Scene Manager functionality
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,10 +29,18 @@ public class PlayerController : MonoBehaviour
 
     // For dimension switching
     private bool inDarkDimension; // To tell what dimension we're currently in
-    private int darkLayerMask;
-    private int lightLayerMask;
-    private Collider2D[] cacheDarkHitColliders;
-    private Collider2D[] cacheLightHitColliders;
+
+    // For Platform Switching
+    private int darkPlatformLayerMask;
+    private int lightPlatformLayerMask;
+    private Collider2D[] cacheDarkPlatformHitColliders;
+    private Collider2D[] cacheLightPlatformHitColliders;
+
+    // For all other dimension switching
+    private int darkOtherLayerMask;
+    private int lightOtherLayerMask;
+    private Collider2D[] cacheDarkOtherHitColliders;
+    private Collider2D[] cacheLightOtherHitColliders;
 
 
     // Use this for initialization
@@ -46,19 +55,30 @@ public class PlayerController : MonoBehaviour
         bottomRightPosition = bottomRightObject.transform.position; // Position of bottom right object
 
         inDarkDimension = true; // Start in dark dimension
-        darkLayerMask = 1 << LayerMask.NameToLayer("DarkDimensionPlatform"); // Holds int mask of dark dimension platform
-        lightLayerMask = 1 << LayerMask.NameToLayer("LightDimensionPlatform"); // Holds int mask of light dimension platform
+
+        // Platforms
+        darkPlatformLayerMask = 1 << LayerMask.NameToLayer("DarkDimensionPlatform"); // Holds int mask of dark dimension platform
+        lightPlatformLayerMask = 1 << LayerMask.NameToLayer("LightDimensionPlatform"); // Holds int mask of light dimension platform
+
+        // Other
+        darkOtherLayerMask = 1 << LayerMask.NameToLayer("DarkDimension"); // Holds int mask of other dark dimension
+        lightOtherLayerMask = 1 << LayerMask.NameToLayer("LightDimension"); // Holds int mask of other light dimension
 
         // Initial overlap of the map. Saves all the colliders. It's not dynamic, so these are used again in the DarkDimension and LightDimension functions.
-        cacheLightHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightLayerMask); // Saves light dimension hit colliders
-        cacheDarkHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkLayerMask); // Saves dark dimension hit coliiders
+        // Platforms
+        cacheDarkPlatformHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkPlatformLayerMask); // Saves dark dimension platform hit coliiders
+        cacheLightPlatformHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightPlatformLayerMask); // Saves light dimension platform hit colliders
+
+        // Other
+        cacheDarkOtherHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkOtherLayerMask); // Saves dark dimension other hit colliders
+        cacheLightOtherHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightOtherLayerMask); // Saves light dimension other hit coliiders
 
         DarkDimension(true); // Start in dark dimension
         LightDimension(false);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         // Gets the current velocity CharacterController2D script. Will gradually increase gravity as we fall, etc.
         Vector3 velocity = controller.velocity; // velocity is also a public variable in the CharacterController2D script
@@ -93,7 +113,7 @@ public class PlayerController : MonoBehaviour
             animator.setAnimation("Idle"); // Same name as it is in the Animator
         }
 
-        // Bug: Jump only works while player is moving
+        // Bug: Jump animation only works while player is moving
 
         // controller.isGrounded returns true of the player is on the ground
         if (controller.isGrounded && Input.GetAxis("Jump") > 0) // Jump only returns positive number. Activated by spacebar
@@ -114,49 +134,90 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
         }
+    }
 
-        // For switching dimensions
-        if (Input.GetKeyDown(KeyCode.W) == true)
+    // This function switches the dimensions. It's called in the ProjectileController script
+    public void SwitchDimension()
+    { 
+        if (inDarkDimension == true) // In dark dimension
         {
-            if (inDarkDimension == true) // In dark dimension
-            {
-                LightDimension(true); // Activate light dimension
-                DarkDimension(false); // Deactivate dark dimension
-                inDarkDimension = false; // Switch bool
-            }
-            else if (inDarkDimension == false) // In light dimension
-            {
-                DarkDimension(true); // Activate dark dimension
-                LightDimension(false); // Deactivate light dimension
-                inDarkDimension = true; // Switch bool
-            }
+            LightDimension(true); // Activate light dimension
+            DarkDimension(false); // Deactivate dark dimension
+            inDarkDimension = false; // Switch bool
         }
-
+        else if (inDarkDimension == false) // In light dimension
+        {
+            DarkDimension(true); // Activate dark dimension
+            LightDimension(false); // Deactivate light dimension
+            inDarkDimension = true; // Switch bool
+        }
     }
 
     private void DarkDimension(bool activeOrDeactive)
     {
-        foreach (Collider2D el in cacheDarkHitColliders)
+        // For Platforms
+        foreach (Collider2D el in cacheDarkPlatformHitColliders)
         {
             el.gameObject.SetActive(activeOrDeactive); // Will either activate or deactivate the dark dimension
         }
 
+        // For Other
+        foreach (Collider2D el in cacheDarkOtherHitColliders)
+        {
+            el.gameObject.SetActive(activeOrDeactive);
+        }
+
+
         // Creates the area overlap and returns all the colliders on a certain layer in the area.
         // Might need to try using OverlapAreaNonAlloc if it's too inefficient.
         // If we have moving platforms it will save the last state it was in.
-        cacheLightHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightLayerMask); // Saves light dimension hit colliders
+        cacheLightPlatformHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightPlatformLayerMask); // Saves light dimension hit colliders
+        cacheLightOtherHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, lightOtherLayerMask); // Saves light dimension other hit coliiders
     }
 
     private void LightDimension(bool activeOrDeactive)
     {
-        foreach (Collider2D el in cacheLightHitColliders)
+        // For Platforms
+        foreach (Collider2D el in cacheLightPlatformHitColliders)
         {
             el.gameObject.SetActive(activeOrDeactive); // Will either activate or deactivate the light dimension
+        }
+
+        // For Other
+        foreach (Collider2D el in cacheLightOtherHitColliders)
+        {
+            el.gameObject.SetActive(activeOrDeactive);
         }
 
         // Creates the area overlap and returns all the colliders on a certain layer in the area.
         // Might need to try using OverlapAreaNonAlloc if it's too inefficient.
         // If we have moving platforms it will save the last state it was in.
-        cacheDarkHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkLayerMask); // Saves dark dimension hit coliiders
+        cacheDarkPlatformHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkPlatformLayerMask); // Saves dark dimension hit coliiders
+        cacheDarkOtherHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkOtherLayerMask); // Saves dark dimension other hit colliders
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "KillZone") // When the KillZone object is collided with
+        {
+            PlayerDeath();
+        }
+
+        if (col.tag == "WinZone") // When the KillZone object is collided with
+        {
+            PlayerWin();
+        }
+    }
+
+    private void PlayerDeath()
+    {
+        //mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
+
+        SceneManager.LoadScene("Playground"); // Loads the scene by name (just reloads the same scene for now)
+    }
+
+    private void PlayerWin()
+    {
+        SceneManager.LoadScene("Playground"); // Loads the scene by name (just reloads the same scene for now)
     }
 }

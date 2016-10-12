@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.JumpSwitchRepo.CSharp.Plugins", "UnityVS.JumpSwitchRepo.CSharp.Plugins.csproj", "{2427BC9B-1489-F9BA-B7A7-E54BA36325FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.JumpSwitchRepo.CSharp", "UnityVS.JumpSwitchRepo.CSharp.csproj", "{AECEFF27-BA4F-0B84-C4CF-B0F4EC4B46BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.JumpSwitchRepo.CSharp.Editor", "UnityVS.JumpSwitchRepo.CSharp.Editor.csproj", "{443F841A-628F-2562-BD6C-FC6E5033CC56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2427BC9B-1489-F9BA-B7A7-E54BA36325FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2427BC9B-1489-F9BA-B7A7-E54BA36325FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2427BC9B-1489-F9BA-B7A7-E54BA36325FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2427BC9B-1489-F9BA-B7A7-E54BA36325FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AECEFF27-BA4F-0B84-C4CF-B0F4EC4B46BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AECEFF27-BA4F-0B84-C4CF-B0F4EC4B46BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AECEFF27-BA4F-0B84-C4CF-B0F4EC4B46BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AECEFF27-BA4F-0B84-C4CF-B0F4EC4B46BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443F841A-628F-2562-BD6C-FC6E5033CC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443F841A-628F-2562-BD6C-FC6E5033CC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443F841A-628F-2562-BD6C-FC6E5033CC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443F841A-628F-2562-BD6C-FC6E5033CC56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
