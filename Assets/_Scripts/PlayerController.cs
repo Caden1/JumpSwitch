@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public GameObject mainCamera; // Reference to the main camera
 
     // public variables can be changed in Unity.
-    public float gravity = -35; 
+    public float gravity = -35;
     public float walkSpeed = 3;
     public float jumpHeight = 2;
 
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         // Use controller to gain access to the public CharacterController2D members
         controller = gameObject.GetComponent<CharacterController2D>(); // initialize for access to CharacterController2D
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             if (controller.isGrounded) // If player is on the ground
             {
                 // Play Run animation
-                animator.setAnimation("Run"); // Same name as it is in the Animator
+                animator.setAnimation("Move2"); // Same name as it is in the Animator
             }
             animator.setFacing("Left"); // Faces sprite to the left
         }
@@ -103,14 +103,14 @@ public class PlayerController : MonoBehaviour
             if (controller.isGrounded) // If player is on the ground
             {
                 // Play Run animation
-                animator.setAnimation("Run"); // Same name as it is in the Animator
+                animator.setAnimation("Move2"); // Same name as it is in the Animator
             }
             animator.setFacing("Right"); // Faces sprite to the Right
         }
         else
         {
             // Play Idle animation
-            animator.setAnimation("Idle"); // Same name as it is in the Animator
+            animator.setAnimation("Idle2"); // Same name as it is in the Animator
         }
 
         // Bug: Jump animation only works while player is moving
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity); // Jump calculation provided by Prime31
 
             // Play Jump animation
-            animator.setAnimation("Jump"); // Same name as it is in the Animator
+            animator.setAnimation("Idle2"); // Same name as it is in the Animator
         }
 
         velocity.y += gravity * Time.deltaTime; // Add gravity to y-direction velocity
@@ -134,11 +134,17 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
         }
+
+        // For restarting the level
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Loads the currently active scene
+        }
     }
 
     // This function switches the dimensions. It's called in the ProjectileController script
     public void SwitchDimension()
-    { 
+    {
         if (inDarkDimension == true) // In dark dimension
         {
             LightDimension(true); // Activate light dimension
@@ -198,26 +204,29 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "KillZone") // When the KillZone object is collided with
+        if (col.tag == "KillZoneLevel1") // When the object is collided with
         {
-            PlayerDeath();
+            mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
+
+            SceneManager.LoadScene("Playground"); // Loads the scene by name
         }
 
-        if (col.tag == "WinZone") // When the KillZone object is collided with
+        if (col.tag == "WinZoneLevel1") // When the object is collided with
         {
-            PlayerWin();
+            SceneManager.LoadScene("Level02"); // Loads the scene by name
+        }
+
+        if (col.tag == "KillZoneLevel2") // When the object is collided with
+        {
+            mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
+
+            SceneManager.LoadScene("Level02"); // Loads the scene by name
+        }
+
+        if (col.tag == "WinZoneLevel2") // When the object is collided with
+        {
+            SceneManager.LoadScene("Playground"); // Loads the scene by name
         }
     }
 
-    private void PlayerDeath()
-    {
-        //mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
-
-        SceneManager.LoadScene("Playground"); // Loads the scene by name (just reloads the same scene for now)
-    }
-
-    private void PlayerWin()
-    {
-        SceneManager.LoadScene("Playground"); // Loads the scene by name (just reloads the same scene for now)
-    }
 }
