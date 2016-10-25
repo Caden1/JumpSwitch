@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         // Bug: Jump animation only works while player is moving
 
         // controller.isGrounded returns true of the player is on the ground
-        if (controller.isGrounded && Input.GetAxis("Jump") > 0) // Jump only returns positive number. Activated by spacebar
+        if (controller.isGrounded && Input.GetAxis("Vertical") > 0) // 'w' and up arrow will jump
         {
             velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity); // Jump calculation provided by Prime31
 
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
         controller.move(velocity * Time.deltaTime); // Time.deltaTime removes inconsistency due to frame-rate
 
         // For firing projectile
-        if (Input.GetKeyDown(KeyCode.Return))
+		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) // Return and Spacebar fire projectile
         {
             Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
         }
