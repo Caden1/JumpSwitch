@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float gravity = -35;
     public float walkSpeed = 3;
     public float jumpHeight = 2;
+    public float timeBetweenShots = 0.5f;
 
     // For getting postions for OverlapAreaAll. Need the game object reference.
     public GameObject topLeftObject;
@@ -42,6 +43,11 @@ public class PlayerController : MonoBehaviour
     private Collider2D[] cacheDarkOtherHitColliders;
     private Collider2D[] cacheLightOtherHitColliders;
 
+    // For delayed projectile firing
+    private bool canShoot;
+
+    // For CheckPoint
+    private bool hitCheckPoint1;
 
     // Use this for initialization
     void Start()
@@ -75,6 +81,10 @@ public class PlayerController : MonoBehaviour
 
         DarkDimension(true); // Start in dark dimension
         LightDimension(false);
+
+        canShoot = true;
+
+        hitCheckPoint1 = false;
     }
 
     // Update is called once per frame
@@ -116,7 +126,7 @@ public class PlayerController : MonoBehaviour
         // Bug: Jump animation only works while player is moving
 
         // controller.isGrounded returns true of the player is on the ground
-        if (controller.isGrounded && Input.GetAxis("Vertical") > 0) // 'w' and up arrow will jump
+        if (controller.isGrounded && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) // 'w' and up arrow will jump
         {
             velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity); // Jump calculation provided by Prime31
 
@@ -132,7 +142,12 @@ public class PlayerController : MonoBehaviour
         // For firing projectile
 		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) // Return and Spacebar fire projectile
         {
-            Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
+            if (canShoot == true)
+            {
+                Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
+                canShoot = false;
+                StartCoroutine(Waiting()); // Calls Waiting function and waits
+            }
         }
 
         // For restarting the level
@@ -140,6 +155,13 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Loads the currently active scene
         }
+    }
+
+    // Taking advantag of coroutines to wait for a certain amount of time
+    IEnumerator Waiting()
+    {
+        yield return new WaitForSecondsRealtime(timeBetweenShots);
+        canShoot = true;
     }
 
     // This function switches the dimensions. It's called in the ProjectileController script
@@ -206,9 +228,20 @@ public class PlayerController : MonoBehaviour
     {
         if (col.tag == "KillZoneLevel1") // When the object is collided with
         {
-            mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
+            if (hitCheckPoint1 == true) // If check point was hit
+            {
+                if (inDarkDimension == false) // If in light dimension
+                {
+                    SwitchDimension(); // Switch dimensions so the black platform will be there for the player respawn
+                }
+                gameObject.transform.position = GameObject.FindWithTag("CheckPointLevel1").transform.position; // Set player position to checkpoints position
+            }
+            else
+            {
+                mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
 
-            SceneManager.LoadScene("Playground"); // Loads the scene by name
+                SceneManager.LoadScene("Playground"); // Loads the scene by name
+            }
         }
 
         if (col.tag == "WinZoneLevel1") // When the object is collided with
@@ -226,6 +259,11 @@ public class PlayerController : MonoBehaviour
         if (col.tag == "WinZoneLevel2") // When the object is collided with
         {
             SceneManager.LoadScene("Playground"); // Loads the scene by name
+        }
+
+        if (col.tag == "CheckPointLevel1") // If the check point was hit
+        {
+            hitCheckPoint1 = true;
         }
     }
 
