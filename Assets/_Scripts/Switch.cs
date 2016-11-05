@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Switch : MonoBehaviour {
-
-	private Animator animator;
-
+public class Switch : MonoBehaviour
+{
 	public GameObject[] switches;
 
 	// Use this for initialization
 	void Start () 
 	{
-		animator = GetComponent<Animator> ();
 		switches = GameObject.FindGameObjectsWithTag("Switch");
 	}
 	

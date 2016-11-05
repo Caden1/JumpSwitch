@@ -29,7 +29,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 bottomRightPosition;
 
     // For dimension switching
-    private bool inDarkDimension; // To tell what dimension we're currently in
+    [HideInInspector]
+    public bool inDarkDimension; // To tell what dimension we're currently in
 
     // For Platform Switching
     private int darkPlatformLayerMask;
@@ -83,8 +84,6 @@ public class PlayerController : MonoBehaviour
         LightDimension(false);
 
         canShoot = true;
-
-        hitCheckPoint1 = false;
     }
 
     // Update is called once per frame
@@ -148,12 +147,6 @@ public class PlayerController : MonoBehaviour
                 canShoot = false;
                 StartCoroutine(Waiting()); // Calls Waiting function and waits
             }
-        }
-
-        // For restarting the level
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Loads the currently active scene
         }
     }
 
@@ -222,49 +215,6 @@ public class PlayerController : MonoBehaviour
         // If we have moving platforms it will save the last state it was in.
         cacheDarkPlatformHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkPlatformLayerMask); // Saves dark dimension hit coliiders
         cacheDarkOtherHitColliders = Physics2D.OverlapAreaAll(topLeftPosition, bottomRightPosition, darkOtherLayerMask); // Saves dark dimension other hit colliders
-    }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "KillZoneLevel1") // When the object is collided with
-        {
-            if (hitCheckPoint1 == true) // If check point was hit
-            {
-                if (inDarkDimension == false) // If in light dimension
-                {
-                    SwitchDimension(); // Switch dimensions so the black platform will be there for the player respawn
-                }
-                gameObject.transform.position = GameObject.FindWithTag("CheckPointLevel1").transform.position; // Set player position to checkpoints position
-            }
-            else
-            {
-                mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
-
-                SceneManager.LoadScene("Playground"); // Loads the scene by name
-            }
-        }
-
-        if (col.tag == "WinZoneLevel1") // When the object is collided with
-        {
-            SceneManager.LoadScene("Level02"); // Loads the scene by name
-        }
-
-        if (col.tag == "KillZoneLevel2") // When the object is collided with
-        {
-            mainCamera.GetComponent<CameraFollow2D>().stopCameraFollow(); // Will stop the camera from tracking the character
-
-            SceneManager.LoadScene("Level02"); // Loads the scene by name
-        }
-
-        if (col.tag == "WinZoneLevel2") // When the object is collided with
-        {
-            SceneManager.LoadScene("Playground"); // Loads the scene by name
-        }
-
-        if (col.tag == "CheckPointLevel1") // If the check point was hit
-        {
-            hitCheckPoint1 = true;
-        }
     }
 
 }

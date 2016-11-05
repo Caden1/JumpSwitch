@@ -84,8 +84,12 @@
     <Compile Include="Assets\_Scripts\AnimationController2D.cs" />
     <Compile Include="Assets\_Scripts\CameraFollow2D.cs" />
     <Compile Include="Assets\_Scripts\CharacterController2D.cs" />
+    <Compile Include="Assets\_Scripts\CheckPoint.cs" />
+    <Compile Include="Assets\_Scripts\KillZone.cs" />
     <Compile Include="Assets\_Scripts\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\ProjectileController.cs" />
+    <Compile Include="Assets\_Scripts\Switch.cs" />
+    <Compile Include="Assets\_Scripts\WinZone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
