@@ -18,19 +18,24 @@ public class KillZone : MonoBehaviour
         // For going to last check point
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (SceneManager.GetActiveScene().name == "Prison1") // If current scene is the Prison1 scene
+            if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Prison1 scene
             {
-                Prison1dScene();
+				Prison1Scene();
             }
 
-            if (SceneManager.GetActiveScene().name == "Playground") // If current scene is the Playground scene
+			if (SceneManager.GetActiveScene().name == "2Prison2") // If current scene is the Prison1 scene
+			{
+				Prison2Scene();
+			}
+
+            if (SceneManager.GetActiveScene().name == "3Cave1") // If current scene is the Playground scene
             {
-                PlaygroundScene();
+				Cave1Scene();
             }
 
-            if (SceneManager.GetActiveScene().name == "Level02") // If current scene is the Level02 scene
+			if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
             {
-                Level02Scene();
+				Cave2Scene();
             }
         }
     }
@@ -39,24 +44,29 @@ public class KillZone : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            if (SceneManager.GetActiveScene().name == "Prison1") // If current scene is the Prison1 scene
-            {
-                Prison1dScene();
-            }
+			if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Prison1 scene
+			{
+				Prison1Scene();
+			}
 
-            if (SceneManager.GetActiveScene().name == "Playground") // If current scene is the Playground scene
-            {
-                PlaygroundScene();
-            }
+			if (SceneManager.GetActiveScene().name == "2Prison2") // If current scene is the Prison1 scene
+			{
+				Prison2Scene();
+			}
 
-            if (SceneManager.GetActiveScene().name == "Level02") // If current scene is the Level02 scene
-            {
-                Level02Scene();
-            }
+			if (SceneManager.GetActiveScene().name == "3Cave1") // If current scene is the Playground scene
+			{
+				Cave1Scene();
+			}
+
+			if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
+			{
+				Cave2Scene();
+			}
         }
     }
 
-    private void Prison1dScene()
+    private void Prison1Scene()
     {
         if (CheckPoint.checkPoint1Active == true)
         {
@@ -68,11 +78,31 @@ public class KillZone : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Prison1"); // Loads the scene by name
+            SceneManager.LoadScene("1Prison1"); // Loads the scene by name
         }
     }
 
-    private void PlaygroundScene()
+	private void Prison2Scene()
+	{
+		if (CheckPoint.checkPoint1Active == true) 
+		{
+			player.transform.position = GameObject.Find ("CheckPoint1").transform.position;
+		} 
+		else if (CheckPoint.checkPoint2Active == true) 
+		{
+			player.transform.position = GameObject.Find ("CheckPoint2").transform.position;
+		} 
+		else if (CheckPoint.checkPoint3Active == true) 
+		{
+			player.transform.position = GameObject.Find ("CheckPoint3").transform.position;
+		} 
+		else 
+		{
+			player.transform.position = GameObject.Find ("CheckPoint1").transform.position;
+		}
+	}
+
+    private void Cave1Scene()
     {
         if (CheckPoint.checkPoint1Active == true)
         {
@@ -84,14 +114,14 @@ public class KillZone : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Playground"); // Loads the scene by name
+			SceneManager.LoadScene("3Cave1"); // Loads the scene by name
         }
 
         //Debug.Log("checkPoint1Active: " + CheckPoint.checkPoint1Active);
         //Debug.Log("checkPoint2Active: " + CheckPoint.checkPoint2Active);
     }
 
-    private void Level02Scene()
+	private void Cave2Scene()
     {
         if (CheckPoint.checkPoint1Active == true)
         {
@@ -101,13 +131,9 @@ public class KillZone : MonoBehaviour
         {
             player.transform.position = GameObject.Find("CheckPoint2").transform.position;
         }
-        else if (CheckPoint.checkPoint3Active == true)
-        {
-            player.transform.position = GameObject.Find("CheckPoint3").transform.position;
-        }
         else
         {
-            SceneManager.LoadScene("Level02"); // Loads the scene by name
+			SceneManager.LoadScene("4Cave2"); // Loads the scene by name
         }
     }
 }

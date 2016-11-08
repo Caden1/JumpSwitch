@@ -23,20 +23,25 @@ public class WinZone : MonoBehaviour
         {
             // Level Progression:
 
-            if (SceneManager.GetActiveScene().name == "Prison1") // If current scene is the Prison1 scene
+			if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Prison1 scene
             {
-                SceneManager.LoadScene("Playground"); // Loads Playground
+				SceneManager.LoadScene("2Prison2"); // Loads Playground
             }
 
-            if (SceneManager.GetActiveScene().name == "Playground") // If current scene is the Playground scene
+			if (SceneManager.GetActiveScene().name == "2Prison2") // If current scene is the Playground scene
             {
-                SceneManager.LoadScene("Level02"); // Loads level 2
+				SceneManager.LoadScene("3Cave1"); // Loads Level4
             }
 
-            if (SceneManager.GetActiveScene().name == "Level02") // If current scene is the Level02 scene
+			if (SceneManager.GetActiveScene().name == "3Cave1") // If current scene is the Level4 scene
             {
-                SceneManager.LoadScene("Prison1"); // Loads Prison1
+				SceneManager.LoadScene("4Cave2"); // Loads Prison1
             }
+
+			if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
+			{
+				SceneManager.LoadScene("1Prison1"); // Loads Prison1
+			}
         }
     }
 }

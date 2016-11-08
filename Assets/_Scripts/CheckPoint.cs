@@ -35,7 +35,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            if (SceneManager.GetActiveScene().name == "Prison1") // If current scene is the Playground scene
+			if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Playground scene
             {
                 if (gameObject.name == "CheckPoint1" && furthestAlong == 1)
                 {
@@ -50,7 +50,31 @@ public class CheckPoint : MonoBehaviour
                 }
             }
                 
-            if (SceneManager.GetActiveScene().name == "Playground") // If current scene is the Playground scene
+			if (SceneManager.GetActiveScene().name == "2Prison2") // If current scene is the Playground scene
+            {
+                if (gameObject.name == "CheckPoint1" && furthestAlong == 1)
+                {
+                    checkPoint1Active = true;
+                    checkPoint2Active = false;
+					checkPoint3Active = false;
+                    furthestAlong = 2;
+                }
+                else if (gameObject.name == "CheckPoint2" && furthestAlong == 2)
+                {
+                    checkPoint1Active = false;
+                    checkPoint2Active = true;
+					checkPoint3Active = false;
+					furthestAlong = 3;
+                }
+				else if (gameObject.name == "CheckPoint3" && furthestAlong == 3)
+				{
+					checkPoint1Active = false;
+					checkPoint2Active = false;
+					checkPoint3Active = true;
+				}
+            }
+
+			if (SceneManager.GetActiveScene().name == "3Cave1") // If current scene is the Level4 scene
             {
                 if (gameObject.name == "CheckPoint1" && furthestAlong == 1)
                 {
@@ -65,29 +89,20 @@ public class CheckPoint : MonoBehaviour
                 }
             }
 
-            if (SceneManager.GetActiveScene().name == "Level02") // If current scene is the Level02 scene
-            {
-                if (gameObject.name == "CheckPoint1" && furthestAlong == 1)
-                {
-                    checkPoint1Active = true;
-                    checkPoint2Active = false;
-                    checkPoint3Active = false;
-                    furthestAlong = 2;
-                }
-                else if (gameObject.name == "CheckPoint2" && furthestAlong == 2)
-                {
-                    checkPoint1Active = false;
-                    checkPoint2Active = true;
-                    checkPoint3Active = false;
-                    furthestAlong = 3;
-                }
-                else if (gameObject.name == "CheckPoint3" && furthestAlong == 3)
-                {
-                    checkPoint1Active = false;
-                    checkPoint2Active = false;
-                    checkPoint3Active = true;
-                }
-            }
+			if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
+			{
+				if (gameObject.name == "CheckPoint1" && furthestAlong == 1)
+				{
+					checkPoint1Active = true;
+					checkPoint2Active = false;
+					furthestAlong = 2;
+				}
+				else if (gameObject.name == "CheckPoint2" && furthestAlong == 2)
+				{
+					checkPoint1Active = false;
+					checkPoint2Active = true;
+				}
+			}
         }
     }
 }
