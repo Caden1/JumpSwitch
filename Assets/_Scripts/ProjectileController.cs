@@ -35,7 +35,6 @@ public class ProjectileController : MonoBehaviour
         if (other.tag == "Switch")
         {
             player.SwitchDimension(); // Calls the PlayerController function to switch dimensions
-            Destroy(gameObject); // Destroys the projectile
         }
     }
 }
