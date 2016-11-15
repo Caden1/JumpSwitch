@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public GameObject projectile; // The projectile itself
 
     private CharacterController2D controller; // variable controller accesses public CharacterController2D members
-    private AnimationController2D animator; // variable animator accesses public AnimationController2D memebers
+    private AnimationController2D animator; // variable animator accesses public AnimationController2D members
 
     // Set the postions of the objects to these.
     private Vector2 topLeftPosition;
@@ -49,6 +49,13 @@ public class PlayerController : MonoBehaviour
 
     // For CheckPoint
     private bool hitCheckPoint1;
+
+	// For delayed warping
+	private bool canWarp;
+	// For Warping
+	private KillZone killZone;
+	// For the shooting animation
+	private bool shootAnimation;
 
     // Use this for initialization
     void Start()
@@ -84,6 +91,12 @@ public class PlayerController : MonoBehaviour
         LightDimension(false);
 
         canShoot = true;
+
+		canWarp = true;
+
+		killZone = gameObject.GetComponent<KillZone> ();
+
+		shootAnimation = true;
     }
 
     // Update is called once per frame
@@ -94,33 +107,65 @@ public class PlayerController : MonoBehaviour
 
         velocity.x = 0; // Re-initialize to zero so player can stop
 
-        if (Input.GetAxis("Horizontal") < 0) // if it returns a number less than zero it's for moving left
-        {
-            velocity.x = -walkSpeed;
+		if (canWarp == true) // Running stops when warping
+		{
+	        if (Input.GetAxis("Horizontal") < 0) // if it returns a number less than zero it's for moving left
+	        {
+	            velocity.x = -walkSpeed;
 
-            if (controller.isGrounded) // If player is on the ground
-            {
-                // Play Run animation
-                animator.setAnimation("Move2"); // Same name as it is in the Animator
-            }
-            animator.setFacing("Left"); // Faces sprite to the left
-        }
-        else if (Input.GetAxis("Horizontal") > 0) // if it returns a number greater than zero it's for moving right
-        {
-            velocity.x = walkSpeed;
+	            if (controller.isGrounded) // If player is on the ground
+	            {
+	                // Play Run animation
+	                animator.setAnimation("Move2"); // Same name as it is in the Animator
+	            }
+	            animator.setFacing("Left"); // Faces sprite to the left
+	        }
+	        else if (Input.GetAxis("Horizontal") > 0) // if it returns a number greater than zero it's for moving right
+	        {
+	            velocity.x = walkSpeed;
 
-            if (controller.isGrounded) // If player is on the ground
-            {
-                // Play Run animation
-                animator.setAnimation("Move2"); // Same name as it is in the Animator
-            }
-            animator.setFacing("Right"); // Faces sprite to the Right
-        }
-        else
-        {
-            // Play Idle animation
-            animator.setAnimation("Idle2"); // Same name as it is in the Animator
-        }
+	            if (controller.isGrounded) // If player is on the ground
+	            {
+	                // Play Run animation
+	                animator.setAnimation("Move2"); // Same name as it is in the Animator
+	            }
+	            animator.setFacing("Right"); // Faces sprite to the Right
+	        }
+			else if (canWarp == true && shootAnimation == true)
+			{
+				// Play Idle animation
+				animator.setAnimation("Idle2"); // Same name as it is in the Animator
+			}
+		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			if (canWarp == true)
+			{
+				canWarp = false;
+				animator.setAnimation("Warp"); // Same name as it is in the Animator
+				StartCoroutine(WaitForWarp()); // Calls WaitForWarp function and waits
+			}	
+		}
+		// For firing projectile
+		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) // Return and Spacebar fire projectile
+		{
+			if (canShoot == true && shootAnimation == true)
+			{
+				shootAnimation = false;
+				if (inDarkDimension == true) // In dark dimension
+				{
+					animator.setAnimation("Player_Shoot_Dark"); // Same name as it is in the Animator
+				}
+				else if (inDarkDimension == false) // In light dimension
+				{
+					animator.setAnimation("Player_Shoot_Light"); // Same name as it is in the Animator
+				}
+				StartCoroutine(WaitForShoot()); // Calls WaitForShoot function and waits
+				Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
+				canShoot = false;
+				StartCoroutine(Waiting()); // Calls Waiting function and waits
+			}
+		}
 
         // Bug: Jump animation only works while player is moving
 
@@ -137,20 +182,24 @@ public class PlayerController : MonoBehaviour
 
         // Movement being applied to the player. the move() function is from the CharacterController2D script
         controller.move(velocity * Time.deltaTime); // Time.deltaTime removes inconsistency due to frame-rate
-
-        // For firing projectile
-		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) // Return and Spacebar fire projectile
-        {
-            if (canShoot == true)
-            {
-                Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
-                canShoot = false;
-                StartCoroutine(Waiting()); // Calls Waiting function and waits
-            }
-        }
     }
 
-    // Taking advantag of coroutines to wait for a certain amount of time
+	// Taking advantage of coroutines to wait for a certain amount of time
+	public IEnumerator WaitForShoot()
+	{
+		yield return new WaitForSecondsRealtime(0.5f);
+		shootAnimation = true;
+	}
+
+	// Taking advantage of coroutines to wait for a certain amount of time
+	public IEnumerator WaitForWarp()
+	{
+		yield return new WaitForSecondsRealtime(0.75f);
+		killZone.LoadScenesAndCheckpoints(); // LoadScenesAndCheckpoints function in the KillZone Script
+		canWarp = true;
+	}
+
+    // Taking advantage of coroutines to wait for a certain amount of time
     IEnumerator Waiting()
     {
         yield return new WaitForSecondsRealtime(timeBetweenShots);

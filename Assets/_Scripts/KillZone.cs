@@ -11,60 +11,37 @@ public class KillZone : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        // For going to last check point
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Prison1 scene
-            {
-				Prison1Scene();
-            }
-
-			if (SceneManager.GetActiveScene().name == "2Prison2") // If current scene is the Prison1 scene
-			{
-				Prison2Scene();
-			}
-
-            if (SceneManager.GetActiveScene().name == "3Cave1") // If current scene is the Playground scene
-            {
-				Cave1Scene();
-            }
-
-			if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
-            {
-				Cave2Scene();
-            }
-        }
-    }
-
+		
     void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "Player")
-        {
-			if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Prison1 scene
-			{
-				Prison1Scene();
-			}
+	{
+		if (col.tag == "Player") 
+		{
+			LoadScenesAndCheckpoints ();
+		}
+	}
 
-			if (SceneManager.GetActiveScene().name == "2Prison2") // If current scene is the Prison1 scene
-			{
-				Prison2Scene();
-			}
+	public void LoadScenesAndCheckpoints() // Also called in the PlayerController Script
+	{
+		if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Prison1 scene
+		{
+			Prison1Scene();
+		}
 
-			if (SceneManager.GetActiveScene().name == "3Cave1") // If current scene is the Playground scene
-			{
-				Cave1Scene();
-			}
+		if (SceneManager.GetActiveScene().name == "2Prison2") // If current scene is the Prison1 scene
+		{
+			Prison2Scene();
+		}
 
-			if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
-			{
-				Cave2Scene();
-			}
-        }
-    }
+		if (SceneManager.GetActiveScene().name == "3Cave1") // If current scene is the Playground scene
+		{
+			Cave1Scene();
+		}
+
+		if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
+		{
+			Cave2Scene();
+		}
+	}
 
     private void Prison1Scene()
     {
@@ -112,6 +89,10 @@ public class KillZone : MonoBehaviour
         {
             player.transform.position = GameObject.Find("CheckPoint2").transform.position;
         }
+		else if (CheckPoint.checkPoint3Active == true) 
+		{
+			player.transform.position = GameObject.Find ("CheckPoint3").transform.position;
+		} 
         else
         {
 			SceneManager.LoadScene("3Cave1"); // Loads the scene by name
