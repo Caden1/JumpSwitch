@@ -1,5 +1,5 @@
 5.4.1f1:2.3.0.0
-StandaloneWindows64
+StandaloneOSXIntel64
 /Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll
 /Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
 /Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
