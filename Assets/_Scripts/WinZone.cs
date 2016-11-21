@@ -4,19 +4,6 @@ using UnityEngine.SceneManagement; // Needed for Scene Manager functionality
 
 public class WinZone : MonoBehaviour
 {
-
-	// Use this for initialization
-	void Start ()
-    {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
-
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Player") // When the object is collided with
@@ -41,7 +28,7 @@ public class WinZone : MonoBehaviour
 			if (SceneManager.GetActiveScene().name == "4Cave2") // If current scene is the Level4 scene
 			{
 				SceneManager.LoadScene("1Prison1"); // Loads Prison1
-			}
+            }
         }
     }
 }
