@@ -22,6 +22,9 @@ public class CheckPoint : MonoBehaviour
     [HideInInspector]
     public static int furthestAlong;
 
+
+	Animator animator;
+
     // Use this for initialization
     void Start ()
     {
@@ -32,12 +35,19 @@ public class CheckPoint : MonoBehaviour
 		checkPoint5Active = false;
 		checkPoint6Active = false;
         furthestAlong = 1;
+
+		animator = GetComponent<Animator> ();
+
     }
 
     void OnTriggerEnter2D(Collider2D col)
-    {
+    {	
+		
         if (col.tag == "Player")
-        {
+        {	
+			
+			animator.SetTrigger ("activate");
+
 			if (SceneManager.GetActiveScene().name == "1Prison1") // If current scene is the Playground scene
             {
                 if (gameObject.name == "CheckPoint1" && furthestAlong == 1)
