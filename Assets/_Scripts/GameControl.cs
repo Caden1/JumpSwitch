@@ -13,7 +13,6 @@ public class GameControl : MonoBehaviour
     public static String currentScene;
     public static int playerProfile; // Will be a number 1, 2, or 3 that corresponds to the profile chosen at the start of a new game.
     public static bool hasData;
-    public static int furthestLevel;
 
     // Awake is called before Start
     void Awake()

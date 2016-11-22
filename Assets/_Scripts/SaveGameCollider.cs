@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement; // Needed for Scene Manager functionality
 
 public class SaveGameCollider : MonoBehaviour
 {
@@ -7,19 +8,19 @@ public class SaveGameCollider : MonoBehaviour
     {
         if (col.tag == "Player") // When the object is collided with
         {
-            // Save to specific file depending on the player profile chosen.
-            if (GameControl.playerProfile == 1)
-            {
-                GameControl.Save("/player1Info.dat"); 
-            }
-            else if (GameControl.playerProfile == 2)
-            {
-                GameControl.Save("/player2Info.dat"); 
-            }
-            else if(GameControl.playerProfile == 3)
-            {
-                GameControl.Save("/player3Info.dat"); 
-            }
+			// Save to specific file depending on the player profile chosen.
+			if (GameControl.playerProfile == 1)
+			{
+				GameControl.Save("/player1Info.dat");
+			}
+			else if (GameControl.playerProfile == 2)
+			{
+				GameControl.Save ("/player2Info.dat"); 
+			}
+			else if(GameControl.playerProfile == 3)
+			{
+				GameControl.Save ("/player3Info.dat"); 
+			}
         }
     }
 }

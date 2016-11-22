@@ -41,6 +41,11 @@ public class KillZone : MonoBehaviour
 		{
 			Cave2Scene();
 		}
+
+		if (SceneManager.GetActiveScene().name == "6Tower2") // If current scene is the Level4 scene
+		{
+			Tower2Scene();
+		}
 	}
 
     private void Prison1Scene()
@@ -117,4 +122,36 @@ public class KillZone : MonoBehaviour
 			SceneManager.LoadScene("4Cave2"); // Loads the scene by name
         }
     }
+
+	private void Tower2Scene()
+	{
+		if (CheckPoint.checkPoint1Active == true)
+		{
+			player.transform.position = GameObject.Find("CheckPoint1").transform.position;
+		}
+		else if (CheckPoint.checkPoint2Active == true)
+		{
+			player.transform.position = GameObject.Find("CheckPoint2").transform.position;
+		}
+		else if (CheckPoint.checkPoint3Active == true) 
+		{
+			player.transform.position = GameObject.Find ("CheckPoint3").transform.position;
+		} 
+		else if (CheckPoint.checkPoint4Active == true)
+		{
+			player.transform.position = GameObject.Find("CheckPoint4").transform.position;
+		}
+		else if (CheckPoint.checkPoint5Active == true)
+		{
+			player.transform.position = GameObject.Find("CheckPoint5").transform.position;
+		}
+		else if (CheckPoint.checkPoint6Active == true) 
+		{
+			player.transform.position = GameObject.Find ("CheckPoint6").transform.position;
+		} 
+		else
+		{
+			SceneManager.LoadScene("6Tower2"); // Loads the scene by name
+		}
+	}
 }

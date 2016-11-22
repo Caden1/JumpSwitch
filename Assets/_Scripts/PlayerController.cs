@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
 	// Taking advantage of coroutines to wait for a certain amount of time
 	public IEnumerator WaitForShoot()
 	{
-		yield return new WaitForSecondsRealtime(0.5f);
+		yield return new WaitForSecondsRealtime(0.4f);
 		shootAnimation = true;
 	}
 

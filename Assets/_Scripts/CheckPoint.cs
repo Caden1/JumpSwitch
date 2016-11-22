@@ -12,6 +12,12 @@ public class CheckPoint : MonoBehaviour
     public static bool checkPoint2Active;
     [HideInInspector]
     public static bool checkPoint3Active;
+	[HideInInspector]
+	public static bool checkPoint4Active;
+	[HideInInspector]
+	public static bool checkPoint5Active;
+	[HideInInspector]
+	public static bool checkPoint6Active;
 
     [HideInInspector]
     public static int furthestAlong;
@@ -22,14 +28,11 @@ public class CheckPoint : MonoBehaviour
         checkPoint1Active = false;
         checkPoint2Active = false;
         checkPoint3Active = false;
+		checkPoint4Active = false;
+		checkPoint5Active = false;
+		checkPoint6Active = false;
         furthestAlong = 1;
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -110,6 +113,69 @@ public class CheckPoint : MonoBehaviour
 				{
 					checkPoint1Active = false;
 					checkPoint2Active = true;
+				}
+			}
+
+			if (SceneManager.GetActiveScene().name == "6Tower2") // If current scene is the Level4 scene
+			{
+				if (gameObject.name == "CheckPoint1" && furthestAlong == 1)
+				{
+					checkPoint1Active = true;
+					checkPoint2Active = false;
+					checkPoint3Active = false;
+					checkPoint4Active = false;
+					checkPoint5Active = false;
+					checkPoint6Active = false;
+					furthestAlong = 2;
+				}
+				else if (gameObject.name == "CheckPoint2" && furthestAlong == 2)
+				{
+					checkPoint1Active = false;
+					checkPoint2Active = true;
+					checkPoint3Active = false;
+					checkPoint4Active = false;
+					checkPoint5Active = false;
+					checkPoint6Active = false;
+					furthestAlong = 3;
+				}
+				else if (gameObject.name == "CheckPoint3" && furthestAlong == 3)
+				{
+					checkPoint1Active = false;
+					checkPoint2Active = false;
+					checkPoint3Active = true;
+					checkPoint4Active = false;
+					checkPoint5Active = false;
+					checkPoint6Active = false;
+					furthestAlong = 4;
+				}
+				else if (gameObject.name == "CheckPoint4" && furthestAlong == 4)
+				{
+					checkPoint1Active = false;
+					checkPoint2Active = false;
+					checkPoint3Active = false;
+					checkPoint4Active = true;
+					checkPoint5Active = false;
+					checkPoint6Active = false;
+					furthestAlong = 5;
+				}
+				else if (gameObject.name == "CheckPoint5" && furthestAlong == 5)
+				{
+					checkPoint1Active = false;
+					checkPoint2Active = false;
+					checkPoint3Active = false;
+					checkPoint4Active = false;
+					checkPoint5Active = true;
+					checkPoint6Active = false;
+					furthestAlong = 6;
+				}
+				else if (gameObject.name == "CheckPoint6" && furthestAlong == 6)
+				{
+					checkPoint1Active = false;
+					checkPoint2Active = false;
+					checkPoint3Active = false;
+					checkPoint4Active = false;
+					checkPoint5Active = false;
+					checkPoint6Active = true;
 				}
 			}
         }

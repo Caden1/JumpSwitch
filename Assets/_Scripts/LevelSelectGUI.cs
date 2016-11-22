@@ -76,6 +76,30 @@ public class LevelSelectGUI : MonoBehaviour
             }
         }
 
+		else if (GameControl.currentScene == "6Tower2")
+		{
+			if (GUI.Button(new Rect(10, 100, 100, 30), "Level 1"))
+			{
+				SceneManager.LoadScene("1Prison1"); // Loads the scene by name
+			}
+			if (GUI.Button(new Rect(10, 140, 100, 30), "Level 2"))
+			{
+				SceneManager.LoadScene("2Prison2"); // Loads the scene by name
+			}
+			if (GUI.Button(new Rect(10, 180, 100, 30), "Level 3"))
+			{
+				SceneManager.LoadScene("3Cave1"); // Loads the scene by name
+			}
+			if (GUI.Button(new Rect(10, 220, 100, 30), "Level 4"))
+			{
+				SceneManager.LoadScene("4Cave2"); // Loads the scene by name
+			}
+			if (GUI.Button(new Rect(10, 260, 100, 30), "Level 5"))
+			{
+				SceneManager.LoadScene("6Tower2"); // Loads the scene by name
+			}
+		}
+
         if (GUI.Button(new Rect(10, 340, 100, 30), "Back"))
         {
             SceneManager.LoadScene("MainMenu"); // Loads the scene by name
