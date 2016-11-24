@@ -32,7 +32,7 @@ public class WinZone : MonoBehaviour
 
 			if (SceneManager.GetActiveScene().name == "6Tower2") // If current scene is the Level4 scene
 			{
-				SceneManager.LoadScene("1Prison1"); // Loads Prison1
+				SceneManager.LoadScene("ProfileSelect"); // Loads Prison1
 			}
         }
     }
