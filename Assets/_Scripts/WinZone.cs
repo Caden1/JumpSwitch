@@ -32,8 +32,39 @@ public class WinZone : MonoBehaviour
 
 			if (SceneManager.GetActiveScene().name == "6Tower2") // If current scene is the Level4 scene
 			{
-				SceneManager.LoadScene("ProfileSelect"); // Loads Prison1
-			}
+                // if ((GameControl.playerProfile == 1 && GameControl.beatGame1 == true) || (GameControl.playerProfile == 2 && GameControl.beatGame2 == true)
+                //      || (GameControl.playerProfile == 3 && GameControl.beatGame3 == true)) // Player has beaten the game.
+
+                // The player has beaten the game at this point. Now unlock level select.
+                if (GameControl.playerProfile == 1)
+                {
+                    GameControl.beatGame1 = true;
+                }
+                else if (GameControl.playerProfile == 2)
+                {
+                    GameControl.beatGame2 = true;
+                }
+                else if (GameControl.playerProfile == 3)
+                {
+                    GameControl.beatGame3 = true;
+                }
+
+                // Save to specific file depending on the player profile chosen. Need to save again so the beatGame variable is saved.
+                if (GameControl.playerProfile == 1)
+                {
+                    GameControl.Save("/player1Info.dat");
+                }
+                else if (GameControl.playerProfile == 2)
+                {
+                    GameControl.Save("/player2Info.dat");
+                }
+                else if (GameControl.playerProfile == 3)
+                {
+                    GameControl.Save("/player3Info.dat");
+                }
+
+                SceneManager.LoadScene("MainMenu"); // Loads MainMenu
+            }
         }
     }
 }

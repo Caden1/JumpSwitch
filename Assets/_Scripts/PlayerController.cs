@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
 
     // For Projectile firing
     public Transform firePosition; // The position it fires from
-    public GameObject projectile; // The projectile itself
+    public GameObject yellowProjectile; // The yellow projectile itself
+    public GameObject blackProjectile; // The black projectile itself
 
     private CharacterController2D controller; // variable controller accesses public CharacterController2D members
     private AnimationController2D animator; // variable animator accesses public AnimationController2D members
@@ -131,7 +132,7 @@ public class PlayerController : MonoBehaviour
 	            }
 	            animator.setFacing("Right"); // Faces sprite to the Right
 	        }
-			else if (canWarp == true && shootAnimation == true)
+			else if (canWarp == true && shootAnimation == true && controller.isGrounded)
 			{
 				// Play Idle animation
 				animator.setAnimation("Idle2"); // Same name as it is in the Animator
@@ -155,19 +156,28 @@ public class PlayerController : MonoBehaviour
 				if (inDarkDimension == true) // In dark dimension
 				{
 					animator.setAnimation("Player_Shoot_Dark"); // Same name as it is in the Animator
-				}
+                }
 				else if (inDarkDimension == false) // In light dimension
 				{
 					animator.setAnimation("Player_Shoot_Light"); // Same name as it is in the Animator
 				}
+
 				StartCoroutine(WaitForShoot()); // Calls WaitForShoot function and waits
-				Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
-				canShoot = false;
+
+                if (inDarkDimension == true)
+                {
+                    Instantiate(yellowProjectile, firePosition.position, firePosition.rotation); // Creates the projectile
+                }
+                else if (inDarkDimension == false)
+                {
+                    Instantiate(blackProjectile, firePosition.position, firePosition.rotation); // Creates the projectile
+                }
+
+				//Instantiate(projectile, firePosition.position, firePosition.rotation); // Creates the projectile
+                canShoot = false;
 				StartCoroutine(Waiting()); // Calls Waiting function and waits
 			}
 		}
-
-        // Bug: Jump animation only works while player is moving
 
         // controller.isGrounded returns true of the player is on the ground
         if (controller.isGrounded && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) // 'w' and up arrow will jump
@@ -175,7 +185,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity); // Jump calculation provided by Prime31
 
             // Play Jump animation
-            animator.setAnimation("Idle2"); // Same name as it is in the Animator
+            animator.setAnimation("Player_Jump"); // Same name as it is in the Animator
         }
 
         velocity.y += gravity * Time.deltaTime; // Add gravity to y-direction velocity
@@ -184,8 +194,8 @@ public class PlayerController : MonoBehaviour
         controller.move(velocity * Time.deltaTime); // Time.deltaTime removes inconsistency due to frame-rate
     }
 
-	// Taking advantage of coroutines to wait for a certain amount of time
-	public IEnumerator WaitForShoot()
+    // Taking advantage of coroutines to wait for a certain amount of time
+    public IEnumerator WaitForShoot()
 	{
 		yield return new WaitForSecondsRealtime(0.4f);
 		shootAnimation = true;

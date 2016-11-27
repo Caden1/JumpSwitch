@@ -12,7 +12,12 @@ public class GameControl : MonoBehaviour
 
     public static String currentScene;
     public static int playerProfile; // Will be a number 1, 2, or 3 that corresponds to the profile chosen at the start of a new game.
-    public static bool hasData;
+    public static bool hasData1;
+    public static bool hasData2;
+    public static bool hasData3;
+    public static bool beatGame1;
+    public static bool beatGame2;
+    public static bool beatGame3;
 
     // Awake is called before Start
     void Awake()
@@ -42,7 +47,7 @@ public class GameControl : MonoBehaviour
     /// </summary>
     public static void Save(String fileName)
     {
-        hasData = true;
+        //hasData = true;
 
         BinaryFormatter bf = new BinaryFormatter();
 
@@ -54,7 +59,12 @@ public class GameControl : MonoBehaviour
         // Setting PlayerData info to local info.
         data.currentScene = currentScene;
         data.playerProfile = playerProfile;
-        data.hasData = hasData;
+        data.hasData1 = hasData1;
+        data.hasData2 = hasData2;
+        data.hasData3 = hasData3;
+        data.beatGame1 = beatGame1;
+        data.beatGame2 = beatGame2;
+        data.beatGame3 = beatGame3;
 
         bf.Serialize(file, data); // Writes data to a file.
         file.Close();
@@ -76,7 +86,12 @@ public class GameControl : MonoBehaviour
             // Setting local info to PlayerData info.
             currentScene = data.currentScene;
             playerProfile = data.playerProfile;
-            hasData = data.hasData;
+            hasData1 = data.hasData1;
+            hasData2 = data.hasData2;
+            hasData3 = data.hasData3;
+            beatGame1 = data.beatGame1;
+            beatGame2 = data.beatGame2;
+            beatGame3 = data.beatGame3;
         }
     }
 
@@ -96,5 +111,10 @@ class PlayerData
 {
     public String currentScene;
     public int playerProfile;
-    public bool hasData;
+    public bool hasData1;
+    public bool hasData2;
+    public bool hasData3;
+    public bool beatGame1;
+    public bool beatGame2;
+    public bool beatGame3;
 }

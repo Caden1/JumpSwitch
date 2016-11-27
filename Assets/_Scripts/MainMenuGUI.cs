@@ -4,8 +4,9 @@ using UnityEngine.SceneManagement; // Needed for Scene Manager functionality
 
 public class MainMenuGUI : MonoBehaviour
 {
+    public Texture backgroundImage;
 
-    void Start()
+    void Awake()
     {
         // Put in the start function so it's only called once.
         if (GameControl.playerProfile == 1)
@@ -26,24 +27,32 @@ public class MainMenuGUI : MonoBehaviour
     {
         //Debug.Log(Application.persistentDataPath.ToString());
 
-        if (GameControl.hasData == false) // Profile has no saved data.
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), backgroundImage);
+
+
+        if ((GameControl.playerProfile == 1 && GameControl.hasData1 == true) || (GameControl.playerProfile == 2 && GameControl.hasData2 == true)
+            || (GameControl.playerProfile == 3 && GameControl.hasData3 == true)) // There is saved data.
         {
-            if (GUI.Button(new Rect(10, 100, 100, 30), "New Game"))
-            {
-                SceneManager.LoadScene("1Prison1"); // Loads the scene by name
-            }
-        }
-        else // There is saved data.
-        {
-            if (GUI.Button(new Rect(10, 100, 100, 30), "Continue"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 20, 100, 30), "Continue"))
             {
                 SceneManager.LoadScene(GameControl.currentScene); // Loads the scene by name
             }
         }
-        
-        if (GUI.Button(new Rect(10, 140, 100, 30), "Level Select"))
+        else // Profile has no saved data.
         {
-            SceneManager.LoadScene("LevelSelect"); // Loads the scene by name
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 20, 100, 30), "New Game"))
+            {
+                SceneManager.LoadScene("1Prison1"); // Loads the scene by name
+            }
+        }
+
+        if ((GameControl.playerProfile == 1 && GameControl.beatGame1 == true) || (GameControl.playerProfile == 2 && GameControl.beatGame2 == true)
+            || (GameControl.playerProfile == 3 && GameControl.beatGame3 == true)) // Player has beaten the game.
+        {
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 40, 100, 30), "Level Select"))
+            {
+                SceneManager.LoadScene("LevelSelect"); // Loads the scene by name
+            }
         }
         /*
         if (GUI.Button(new Rect(10, 220, 100, 30), "Change Key Bindings"))
@@ -53,7 +62,7 @@ public class MainMenuGUI : MonoBehaviour
             //SceneManager.LoadScene(); // Loads the scene by name
         }
         */
-        if (GUI.Button(new Rect(10, 340, 100, 30), "Back"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 140, 100, 30), "Back"))
         {
             SceneManager.LoadScene("ProfileSelect"); // Loads the scene by name
         }

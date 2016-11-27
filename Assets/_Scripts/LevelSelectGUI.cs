@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement; // Needed for Scene Manager functionality
 
 public class LevelSelectGUI : MonoBehaviour
 {
+    public Texture backgroundImage;
+
     void Start()
     {
         // Put in the start function so it's only called once.
@@ -23,84 +25,33 @@ public class LevelSelectGUI : MonoBehaviour
 
     void OnGUI()
     {
-        if (GameControl.currentScene == "1Prison1")
-        {
-            if (GUI.Button(new Rect(10, 100, 100, 30), "Level 1"))
-            {
-                SceneManager.LoadScene("1Prison1"); // Loads the scene by name
-            }
-        }
-        else if (GameControl.currentScene == "2Prison2")
-        {
-            if (GUI.Button(new Rect(10, 100, 100, 30), "Level 1"))
-            {
-                SceneManager.LoadScene("1Prison1"); // Loads the scene by name
-            }
-            if (GUI.Button(new Rect(10, 140, 100, 30), "Level 2"))
-            {
-                SceneManager.LoadScene("2Prison2"); // Loads the scene by name
-            }
-        }
-        else if (GameControl.currentScene == "3Cave1")
-        {
-            if (GUI.Button(new Rect(10, 100, 100, 30), "Level 1"))
-            {
-                SceneManager.LoadScene("1Prison1"); // Loads the scene by name
-            }
-            if (GUI.Button(new Rect(10, 140, 100, 30), "Level 2"))
-            {
-                SceneManager.LoadScene("2Prison2"); // Loads the scene by name
-            }
-            if (GUI.Button(new Rect(10, 180, 100, 30), "Level 3"))
-            {
-                SceneManager.LoadScene("3Cave1"); // Loads the scene by name
-            }
-        }
-        else if (GameControl.currentScene == "4Cave2")
-        {
-            if (GUI.Button(new Rect(10, 100, 100, 30), "Level 1"))
-            {
-                SceneManager.LoadScene("1Prison1"); // Loads the scene by name
-            }
-            if (GUI.Button(new Rect(10, 140, 100, 30), "Level 2"))
-            {
-                SceneManager.LoadScene("2Prison2"); // Loads the scene by name
-            }
-            if (GUI.Button(new Rect(10, 180, 100, 30), "Level 3"))
-            {
-                SceneManager.LoadScene("3Cave1"); // Loads the scene by name
-            }
-            if (GUI.Button(new Rect(10, 220, 100, 30), "Level 4"))
-            {
-                SceneManager.LoadScene("4Cave2"); // Loads the scene by name
-            }
-        }
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), backgroundImage);
 
-		else if (GameControl.currentScene == "6Tower2")
+		if (GameControl.currentScene == "6Tower2") // Sanity check to make sure the player has really beaten the game.
 		{
-			if (GUI.Button(new Rect(10, 100, 100, 30), "Level 1"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 40, 100, 30), "Level 1"))
 			{
 				SceneManager.LoadScene("1Prison1"); // Loads the scene by name
 			}
-			if (GUI.Button(new Rect(10, 140, 100, 30), "Level 2"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 10, 100, 30), "Level 2"))
 			{
 				SceneManager.LoadScene("2Prison2"); // Loads the scene by name
 			}
-			if (GUI.Button(new Rect(10, 180, 100, 30), "Level 3"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 20, 100, 30), "Level 3"))
 			{
 				SceneManager.LoadScene("3Cave1"); // Loads the scene by name
 			}
-			if (GUI.Button(new Rect(10, 220, 100, 30), "Level 4"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 50, 100, 30), "Level 4"))
 			{
 				SceneManager.LoadScene("4Cave2"); // Loads the scene by name
 			}
-			if (GUI.Button(new Rect(10, 260, 100, 30), "Level 5"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 80, 100, 30), "Level 5"))
 			{
 				SceneManager.LoadScene("6Tower2"); // Loads the scene by name
 			}
 		}
 
-        if (GUI.Button(new Rect(10, 340, 100, 30), "Back"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 140, 100, 30), "Back"))
         {
             SceneManager.LoadScene("MainMenu"); // Loads the scene by name
         }

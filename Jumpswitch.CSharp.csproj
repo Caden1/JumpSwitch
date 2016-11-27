@@ -64,6 +64,9 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
@@ -89,8 +92,10 @@
     <Compile Include="Assets\_Scripts\KillZone.cs" />
     <Compile Include="Assets\_Scripts\LevelSelectGUI.cs" />
     <Compile Include="Assets\_Scripts\MainMenuGUI.cs" />
+    <Compile Include="Assets\_Scripts\PauseGame.cs" />
     <Compile Include="Assets\_Scripts\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\ProfileSelectGUI.cs" />
+    <Compile Include="Assets\_Scripts\ProjectileAnimation.cs" />
     <Compile Include="Assets\_Scripts\ProjectileController.cs" />
     <Compile Include="Assets\_Scripts\SaveGameCollider.cs" />
     <Compile Include="Assets\_Scripts\SingletonPattern.cs" />
