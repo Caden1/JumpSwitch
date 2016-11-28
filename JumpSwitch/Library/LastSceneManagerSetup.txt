@@ -1,0 +1,4 @@
+sceneSetups:
+- path: C:/Users/Andrew/Documents/GitHub/Jump Switch/JumpSwitch/Assets/_Scenes/1Prison1.unity
+  isLoaded: 1
+  isActive: 1
