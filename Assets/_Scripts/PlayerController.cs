@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public GameObject blackProjectile; // The black projectile itself
 
     private CharacterController2D controller; // variable controller accesses public CharacterController2D members
-    private AnimationController2D animator; // variable animator accesses public AnimationController2D members
+    private Animator animator; // variable animator accesses public AnimationController2D members
 
     // Set the postions of the objects to these.
     private Vector2 topLeftPosition;
@@ -57,19 +57,23 @@ public class PlayerController : MonoBehaviour
 	private KillZone killZone;
 	// For the shooting animation
 	private bool shootAnimation;
+    //Facing direction
+    private int direction; // The scale for the player is (8,8,1)!!!
 
     // Use this for initialization
     void Start()
     {
         // Use controller to gain access to the public CharacterController2D members
         controller = gameObject.GetComponent<CharacterController2D>(); // initialize for access to CharacterController2D
-        animator = gameObject.GetComponent<AnimationController2D>(); // initialize for access to AnimationController2D
+        animator = GetComponent<Animator>(); // initialize for access to Animation Controller
         mainCamera.GetComponent<CameraFollow2D>().startCameraFollow(this.gameObject); // Will set the camera to start following the player
 
         topLeftPosition = topLeftObject.transform.position; // Position of top left object
         bottomRightPosition = bottomRightObject.transform.position; // Position of bottom right object
 
         inDarkDimension = true; // Start in dark dimension
+        animator.SetBool("dDark", true);
+        animator.SetBool("Light", false);
 
         // Platforms
         darkPlatformLayerMask = 1 << LayerMask.NameToLayer("DarkDimensionPlatform"); // Holds int mask of dark dimension platform
@@ -98,11 +102,14 @@ public class PlayerController : MonoBehaviour
 		killZone = gameObject.GetComponent<KillZone> ();
 
 		shootAnimation = true;
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         // Gets the current velocity CharacterController2D script. Will gradually increase gravity as we fall, etc.
         Vector3 velocity = controller.velocity; // velocity is also a public variable in the CharacterController2D script
 
@@ -113,38 +120,51 @@ public class PlayerController : MonoBehaviour
 	        if (Input.GetAxis("Horizontal") < 0) // if it returns a number less than zero it's for moving left
 	        {
 	            velocity.x = -walkSpeed;
+                direction = -8;
 
 	            if (controller.isGrounded) // If player is on the ground
 	            {
-	                // Play Run animation
-	                animator.setAnimation("Move2"); // Same name as it is in the Animator
-	            }
-	            animator.setFacing("Left"); // Faces sprite to the left
+                    // Play Run animation
+                    transform.localScale = new Vector3(direction, 8, 1);
+                    animator.SetBool("move", true); // Same name as it is in the Animator
+                   
+                }
+                
+               
 	        }
 	        else if (Input.GetAxis("Horizontal") > 0) // if it returns a number greater than zero it's for moving right
 	        {
 	            velocity.x = walkSpeed;
+                direction = 8;
 
 	            if (controller.isGrounded) // If player is on the ground
 	            {
-	                // Play Run animation
-	                animator.setAnimation("Move2"); // Same name as it is in the Animator
-	            }
-	            animator.setFacing("Right"); // Faces sprite to the Right
-	        }
-			else if (canWarp == true && shootAnimation == true && controller.isGrounded)
+                    // Play Run animation
+                    transform.localScale = new Vector3(direction, 8, 1);
+                    animator.SetBool("move", true); // Same name as it is in the Animator
+            
+                }
+                
+                 // Faces sprite to the Right
+         
+            }
+            
+		else if (canWarp == true && shootAnimation == true && controller.isGrounded)
 			{
 				// Play Idle animation
-				animator.setAnimation("Idle2"); // Same name as it is in the Animator
+				 // Same name as it is in the Animator
+                animator.SetBool("move", false);
 			}
+
 		}
 		if (Input.GetKeyDown(KeyCode.R))
 		{
 			if (canWarp == true)
 			{
 				canWarp = false;
-				animator.setAnimation("Warp"); // Same name as it is in the Animator
+			    animator.SetTrigger("warp"); // Same name as it is in the Animator
 				StartCoroutine(WaitForWarp()); // Calls WaitForWarp function and waits
+                
 			}	
 		}
 		// For firing projectile
@@ -155,12 +175,12 @@ public class PlayerController : MonoBehaviour
 				shootAnimation = false;
 				if (inDarkDimension == true) // In dark dimension
 				{
-					animator.setAnimation("Player_Shoot_Dark"); // Same name as it is in the Animator
+					animator.SetTrigger("shoot"); // Same name as it is in the Animator
                 }
 				else if (inDarkDimension == false) // In light dimension
 				{
-					animator.setAnimation("Player_Shoot_Light"); // Same name as it is in the Animator
-				}
+					animator.SetTrigger("shoot"); // Same name as it is in the Animator
+                }
 
 				StartCoroutine(WaitForShoot()); // Calls WaitForShoot function and waits
 
@@ -179,15 +199,23 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
+        if (controller.isGrounded)
+        {
+            animator.SetBool("grounded", true);
+        }
+        else if (!controller.isGrounded) {
+            animator.SetBool("grounded", false);
+        }
         // controller.isGrounded returns true of the player is on the ground
         if (controller.isGrounded && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) // 'w' and up arrow will jump
         {
+            animator.SetBool("grounded", false);            
             velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity); // Jump calculation provided by Prime31
 
             // Play Jump animation
-            animator.setAnimation("Player_Jump"); // Same name as it is in the Animator
+           animator.SetTrigger("jump"); // Same name as it is in the Animator
         }
-
+        
         velocity.y += gravity * Time.deltaTime; // Add gravity to y-direction velocity
 
         // Movement being applied to the player. the move() function is from the CharacterController2D script
@@ -206,7 +234,7 @@ public class PlayerController : MonoBehaviour
 	{
 		yield return new WaitForSecondsRealtime(0.75f);
 		killZone.LoadScenesAndCheckpoints(); // LoadScenesAndCheckpoints function in the KillZone Script
-		canWarp = true;
+        canWarp = true;
 	}
 
     // Taking advantage of coroutines to wait for a certain amount of time
@@ -223,12 +251,16 @@ public class PlayerController : MonoBehaviour
         {
             LightDimension(true); // Activate light dimension
             DarkDimension(false); // Deactivate dark dimension
+            animator.SetBool("dLight", true); //swap dimesnions for animator
+            animator.SetBool("dDark", false);
             inDarkDimension = false; // Switch bool
         }
         else if (inDarkDimension == false) // In light dimension
         {
             DarkDimension(true); // Activate dark dimension
             LightDimension(false); // Deactivate light dimension
+            animator.SetBool("Light", false);
+            animator.SetBool("dDark", true);
             inDarkDimension = true; // Switch bool
         }
     }
