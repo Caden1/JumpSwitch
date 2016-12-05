@@ -34,31 +34,31 @@ public class LevelSelectGUI : MonoBehaviour
 
 		if (GameControl.currentScene == "6Tower2") // Sanity check to make sure the player has really beaten the game.
 		{
-			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 40, 100, 30), "Level 1"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 100, 100, 30), "Level 1"))
 			{
 				audio.PlayOneShot(buttonClick, 2f);
 
 				Invoke ("Level1Load", 0.3f); // Delays load for 0.3 seconds.
 			}
-			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 10, 100, 30), "Level 2"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 70, 100, 30), "Level 2"))
 			{
 				audio.PlayOneShot(buttonClick, 2f);
 
 				Invoke ("Level2Load", 0.3f); // Delays load for 0.3 seconds.
 			}
-			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 20, 100, 30), "Level 3"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 40, 100, 30), "Level 3"))
 			{
 				audio.PlayOneShot(buttonClick, 2f);
 
 				Invoke ("Level3Load", 0.3f); // Delays load for 0.3 seconds.
 			}
-			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 50, 100, 30), "Level 4"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 10, 100, 30), "Level 4"))
 			{
 				audio.PlayOneShot(buttonClick, 2f);
 
 				Invoke ("Level4Load", 0.3f); // Delays load for 0.3 seconds.
 			}
-			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 80, 100, 30), "Level 5"))
+			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 20, 100, 30), "Level 5"))
 			{
 				audio.PlayOneShot(buttonClick, 2f);
 
@@ -66,7 +66,7 @@ public class LevelSelectGUI : MonoBehaviour
 			}
 		}
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 140, 100, 30), "Back"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 110, 100, 30), "Back"))
         {
 			audio.PlayOneShot(buttonClick, 2f);
 

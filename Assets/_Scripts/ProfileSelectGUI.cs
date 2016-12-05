@@ -22,7 +22,7 @@ public class ProfileSelectGUI : MonoBehaviour
 
         GUI.Box(new Rect(0, 0, Screen.width, Screen.height), backgroundImage);
 
-        if (GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 20, 100, 30), "Profile 1"))
+        if (GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 100, 100, 30), "Profile 1"))
         {
 			audio.PlayOneShot(buttonClick, 2f);
 
@@ -30,7 +30,7 @@ public class ProfileSelectGUI : MonoBehaviour
 
 			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 40, 100, 30), "Profile 2"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 30, 100, 30), "Profile 2"))
         {
 			audio.PlayOneShot(buttonClick, 2f);
 
@@ -38,7 +38,7 @@ public class ProfileSelectGUI : MonoBehaviour
 
 			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 100, 100, 30), "Profile 3"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 40, 100, 30), "Profile 3"))
         {
 			audio.PlayOneShot(buttonClick, 2f);
 
@@ -46,10 +46,21 @@ public class ProfileSelectGUI : MonoBehaviour
 
 			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 110, 100, 30), "Quit"))
+        {
+            audio.PlayOneShot(buttonClick, 2f);
+
+            Invoke("QuitGame", 0.3f); // Delays load for 0.3 seconds.
+        }
     }
 
 	private void MainMenuLoad()
 	{
 		SceneManager.LoadScene("MainMenu"); // Loads the scene by name
 	}
+
+    private void QuitGame()
+    {
+        Application.Quit(); // Quits the application
+    }
 }

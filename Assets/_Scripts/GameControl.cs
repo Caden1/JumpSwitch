@@ -10,7 +10,7 @@ public class GameControl : MonoBehaviour
     // public static reference variable to this class.
     //public static GameControl control;
 
-    public static String currentScene;
+    public static string currentScene;
     public static int playerProfile; // Will be a number 1, 2, or 3 that corresponds to the profile chosen at the start of a new game.
     public static bool hasData1;
     public static bool hasData2;
@@ -22,7 +22,7 @@ public class GameControl : MonoBehaviour
     // Awake is called before Start
     void Awake()
     {
-        currentScene = SceneManager.GetActiveScene().name;
+        //currentScene = SceneManager.GetActiveScene().name;
 
         // Becasuse I'm only saving the current scene and player profile, I don't need a singleton:
         /*
@@ -45,13 +45,14 @@ public class GameControl : MonoBehaviour
     /// Saves data to a file.
     /// fileName is passed in in the SaveGameCollider Script.
     /// </summary>
-    public static void Save(String fileName)
+    public static void Save(string fileName)
     {
         //hasData = true;
+        currentScene = SceneManager.GetActiveScene().name;
 
         BinaryFormatter bf = new BinaryFormatter();
 
-        // Unity uses the persistent data path (hidden files): User->App Data->Roaming......
+        // Unity uses the persistent data path (hidden files)
         FileStream file = File.Create(Application.persistentDataPath + fileName);
 
         PlayerData data = new PlayerData(); // Instance of class PlayerData (below)
@@ -74,7 +75,7 @@ public class GameControl : MonoBehaviour
     /// Loads data from a file.
     /// fileName is passed in in the MainMenuGUI Script.
     /// </summary>
-    public static void Load(String fileName)
+    public static void Load(string fileName)
     {
         if (File.Exists(Application.persistentDataPath + fileName)) // If the file exists. "/player1Info.dat" is the file for profile 1.
         {
@@ -109,7 +110,7 @@ public class GameControl : MonoBehaviour
 [Serializable]
 class PlayerData
 {
-    public String currentScene;
+    public string currentScene;
     public int playerProfile;
     public bool hasData1;
     public bool hasData2;

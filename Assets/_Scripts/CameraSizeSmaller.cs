@@ -12,12 +12,6 @@ public class CameraSizeSmaller : MonoBehaviour
     {
         cameraOriginalSize = mainCamera.orthographicSize; // Gets the starting size of the main camera
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
 
     void OnTriggerEnter2D(Collider2D col)
     {

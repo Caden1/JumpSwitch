@@ -19,7 +19,7 @@ public class ControlsGUI : MonoBehaviour
     {
         GUI.Box(new Rect(0, 0, Screen.width, Screen.height), backgroundImage);
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 140, 100, 30), "Back"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 110, 100, 30), "Back"))
         {
             audio.PlayOneShot(buttonClick, 2f);
 

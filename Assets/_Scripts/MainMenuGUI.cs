@@ -41,7 +41,7 @@ public class MainMenuGUI : MonoBehaviour
         if ((GameControl.playerProfile == 1 && GameControl.hasData1 == true) || (GameControl.playerProfile == 2 && GameControl.hasData2 == true)
             || (GameControl.playerProfile == 3 && GameControl.hasData3 == true)) // There is saved data.
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 20, 100, 30), "Continue"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 100, 100, 30), "Continue"))
             {
 				audio.PlayOneShot(buttonClick, 2f);
 
@@ -50,7 +50,7 @@ public class MainMenuGUI : MonoBehaviour
         }
         else // Profile has no saved data.
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 20, 100, 30), "New Game"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 100, 100, 30), "New Game"))
             {
 				audio.PlayOneShot(buttonClick, 2f);
 
@@ -58,7 +58,7 @@ public class MainMenuGUI : MonoBehaviour
             }
         }
 
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 30, 100, 30), "Controls"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 30, 100, 30), "Controls"))
         {
             audio.PlayOneShot(buttonClick, 2f);
 
@@ -68,7 +68,7 @@ public class MainMenuGUI : MonoBehaviour
         if ((GameControl.playerProfile == 1 && GameControl.beatGame1 == true) || (GameControl.playerProfile == 2 && GameControl.beatGame2 == true)
             || (GameControl.playerProfile == 3 && GameControl.beatGame3 == true)) // Player has beaten the game.
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 80, 100, 30), "Level Select"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 40, 100, 30), "Level Select"))
             {
 				audio.PlayOneShot(buttonClick, 2f);
 
@@ -83,7 +83,7 @@ public class MainMenuGUI : MonoBehaviour
             //SceneManager.LoadScene(); // Loads the scene by name
         }
         */
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 140, 100, 30), "Back"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 110, 100, 30), "Back"))
         {
 			audio.PlayOneShot(buttonClick, 2f);
 
