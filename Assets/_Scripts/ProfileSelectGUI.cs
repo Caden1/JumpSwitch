@@ -6,6 +6,14 @@ public class ProfileSelectGUI : MonoBehaviour
 {
     public Texture backgroundImage;
     //public Texture profile1Button;
+
+	public AudioClip buttonClick;
+	AudioSource audio;
+
+	void Start()
+	{
+		audio = GetComponent<AudioSource>();
+	}
     
 
     void OnGUI()
@@ -16,21 +24,32 @@ public class ProfileSelectGUI : MonoBehaviour
 
         if (GUI.Button(new Rect(Screen.width/2 - 50, Screen.height/2 - 20, 100, 30), "Profile 1"))
         {
+			audio.PlayOneShot(buttonClick, 2f);
+
             GameControl.playerProfile = 1;
 
-            SceneManager.LoadScene("MainMenu"); // Loads the scene by name
+			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
         if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 40, 100, 30), "Profile 2"))
         {
+			audio.PlayOneShot(buttonClick, 2f);
+
             GameControl.playerProfile = 2;
 
-            SceneManager.LoadScene("MainMenu"); // Loads the scene by name
+			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
         if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 100, 100, 30), "Profile 3"))
         {
+			audio.PlayOneShot(buttonClick, 2f);
+
             GameControl.playerProfile = 3;
 
-            SceneManager.LoadScene("MainMenu"); // Loads the scene by name
+			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
     }
+
+	private void MainMenuLoad()
+	{
+		SceneManager.LoadScene("MainMenu"); // Loads the scene by name
+	}
 }

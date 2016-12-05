@@ -60,6 +60,25 @@ public class PlayerController : MonoBehaviour
     //Facing direction
     private int direction; // The scale for the player is (8,8,1)!!!
 
+	// For playing sound effects
+	public float shootVolume = 0.5f;
+	public AudioClip shootSound;
+	public float deathVolume = 0.5f;
+	public AudioClip deathSound;
+	public float jumpVolume = 0.5f;
+	public AudioClip jumpSound;
+	public float landVolume = 0.5f;
+	public AudioClip landSound;
+	public float checkpointVolume = 0.5f;
+	public AudioClip checkpointSound;
+	public float warpVolume = 0.5f;
+	public AudioClip warpSound;
+	public float respawnVolume = 0.5f;
+	public AudioClip respawnSound;
+	public float switchVolume = 0.5f;
+	public AudioClip switchSound;
+	AudioSource audio;
+
     // Use this for initialization
     void Start()
     {
@@ -103,7 +122,8 @@ public class PlayerController : MonoBehaviour
 
 		shootAnimation = true;
 
-        
+		// For playing sound effects
+		audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -176,10 +196,12 @@ public class PlayerController : MonoBehaviour
 				if (inDarkDimension == true) // In dark dimension
 				{
 					animator.SetTrigger("shoot"); // Same name as it is in the Animator
+					audio.PlayOneShot(shootSound, shootVolume);
                 }
 				else if (inDarkDimension == false) // In light dimension
 				{
 					animator.SetTrigger("shoot"); // Same name as it is in the Animator
+					audio.PlayOneShot(shootSound, shootVolume);
                 }
 
 				StartCoroutine(WaitForShoot()); // Calls WaitForShoot function and waits

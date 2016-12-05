@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
 
@@ -16,6 +17,5 @@ public class AudioManager : MonoBehaviour
 
             audioToPlay.GetComponent<AudioSource>().Play(); // Plays the new audio
         }
-
     }
 }

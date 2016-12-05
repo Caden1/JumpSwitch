@@ -6,8 +6,13 @@ public class LevelSelectGUI : MonoBehaviour
 {
     public Texture backgroundImage;
 
+	public AudioClip buttonClick;
+	AudioSource audio;
+
     void Start()
     {
+		audio = GetComponent<AudioSource>();
+
         // Put in the start function so it's only called once.
         if (GameControl.playerProfile == 1)
         {
@@ -31,29 +36,71 @@ public class LevelSelectGUI : MonoBehaviour
 		{
 			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 40, 100, 30), "Level 1"))
 			{
-				SceneManager.LoadScene("1Prison1"); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("Level1Load", 0.3f); // Delays load for 0.3 seconds.
 			}
 			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 10, 100, 30), "Level 2"))
 			{
-				SceneManager.LoadScene("2Prison2"); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("Level2Load", 0.3f); // Delays load for 0.3 seconds.
 			}
 			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 20, 100, 30), "Level 3"))
 			{
-				SceneManager.LoadScene("3Cave1"); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("Level3Load", 0.3f); // Delays load for 0.3 seconds.
 			}
 			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 50, 100, 30), "Level 4"))
 			{
-				SceneManager.LoadScene("4Cave2"); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("Level4Load", 0.3f); // Delays load for 0.3 seconds.
 			}
 			if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 80, 100, 30), "Level 5"))
 			{
-				SceneManager.LoadScene("6Tower2"); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("Level5Load", 0.3f); // Delays load for 0.3 seconds.
 			}
 		}
 
         if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 140, 100, 30), "Back"))
         {
-            SceneManager.LoadScene("MainMenu"); // Loads the scene by name
+			audio.PlayOneShot(buttonClick, 2f);
+
+			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
     }
+
+	private void Level1Load()
+	{
+		SceneManager.LoadScene("1Prison1"); // Loads the scene by name
+	}
+
+	private void Level2Load()
+	{
+		SceneManager.LoadScene("2Prison2"); // Loads the scene by name
+	}
+
+	private void Level3Load()
+	{
+		SceneManager.LoadScene("3Cave1"); // Loads the scene by name
+	}
+
+	private void Level4Load()
+	{
+		SceneManager.LoadScene("4Cave2"); // Loads the scene by name
+	}
+
+	private void Level5Load()
+	{
+		SceneManager.LoadScene("6Tower2"); // Loads the scene by name
+	}
+
+	private void MainMenuLoad()
+	{
+		SceneManager.LoadScene("MainMenu"); // Loads the scene by name
+	}
 }

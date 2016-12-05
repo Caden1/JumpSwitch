@@ -1,16 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\PlayerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Scripts/PlayerController.cs">
     <Files>
-      <File FileName="Assets\_Scripts\ProfileSelectGUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\MainMenuGUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\GameControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\LevelSelectGUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\SaveGameCollider.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\PlayerController.cs" Line="164" Column="101" />
-      <File FileName="Assets\_Scripts\CheckPoint.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Switch.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\ProjectileController.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Scripts/AudioManager.cs" Line="22" Column="1" />
+      <File FileName="Assets/_Scripts/ProfileSelectGUI.cs" Line="51" Column="27" />
+      <File FileName="Assets/_Scripts/MainMenuGUI.cs" Line="83" Column="67" />
+      <File FileName="Assets/_Scripts/LevelSelectGUI.cs" Line="45" Column="5" />
+      <File FileName="Assets/_Scripts/PlayerController.cs" Line="72" Column="39" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

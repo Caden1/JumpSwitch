@@ -6,6 +6,14 @@ public class MainMenuGUI : MonoBehaviour
 {
     public Texture backgroundImage;
 
+	public AudioClip buttonClick;
+	AudioSource audio;
+
+	void Start()
+	{
+		audio = GetComponent<AudioSource>();
+	}
+
     void Awake()
     {
         // Put in the start function so it's only called once.
@@ -35,14 +43,18 @@ public class MainMenuGUI : MonoBehaviour
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 20, 100, 30), "Continue"))
             {
-                SceneManager.LoadScene(GameControl.currentScene); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("ContinueGameLoad", 0.3f); // Delays load for 0.3 seconds.
             }
         }
         else // Profile has no saved data.
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 20, 100, 30), "New Game"))
             {
-                SceneManager.LoadScene("1Prison1"); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("Level1Load", 0.3f); // Delays load for 0.3 seconds.
             }
         }
 
@@ -51,7 +63,9 @@ public class MainMenuGUI : MonoBehaviour
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 40, 100, 30), "Level Select"))
             {
-                SceneManager.LoadScene("LevelSelect"); // Loads the scene by name
+				audio.PlayOneShot(buttonClick, 2f);
+
+				Invoke ("LevelSelectLoad", 0.3f); // Delays load for 0.3 seconds.
             }
         }
         /*
@@ -64,7 +78,29 @@ public class MainMenuGUI : MonoBehaviour
         */
         if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 140, 100, 30), "Back"))
         {
-            SceneManager.LoadScene("ProfileSelect"); // Loads the scene by name
+			audio.PlayOneShot(buttonClick, 2f);
+
+			Invoke ("ProfileSelect", 0.3f); // Delays load for 0.3 seconds.
         }
     }
+
+	private void ContinueGameLoad()
+	{
+		SceneManager.LoadScene(GameControl.currentScene); // Loads the scene by name
+	}
+
+	private void Level1Load()
+	{
+		SceneManager.LoadScene("1Prison1"); // Loads the scene by name
+	}
+
+	private void LevelSelectLoad()
+	{
+		SceneManager.LoadScene("LevelSelect"); // Loads the scene by name
+	}
+
+	private void ProfileSelectLoad()
+	{
+		SceneManager.LoadScene("ProfileSelect"); // Loads the scene by name
+	}
 }
