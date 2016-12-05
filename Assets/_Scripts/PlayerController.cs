@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         inDarkDimension = true; // Start in dark dimension
         animator.SetBool("dDark", true);
-        animator.SetBool("Light", false);
+        animator.SetBool("dLight", false);
 
         // Platforms
         darkPlatformLayerMask = 1 << LayerMask.NameToLayer("DarkDimensionPlatform"); // Holds int mask of dark dimension platform
@@ -300,7 +300,7 @@ public class PlayerController : MonoBehaviour
         {
             DarkDimension(true); // Activate dark dimension
             LightDimension(false); // Deactivate light dimension
-            animator.SetBool("Light", false);
+            animator.SetBool("dLight", false);
             animator.SetBool("dDark", true);
             inDarkDimension = true; // Switch bool
 
