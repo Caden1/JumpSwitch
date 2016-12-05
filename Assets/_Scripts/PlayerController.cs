@@ -63,21 +63,22 @@ public class PlayerController : MonoBehaviour
 	// For playing sound effects
 	public float shootVolume = 0.5f;
 	public AudioClip shootSound;
-	public float deathVolume = 0.5f;
-	public AudioClip deathSound;
 	public float jumpVolume = 0.5f;
 	public AudioClip jumpSound;
-	public float landVolume = 0.5f;
-	public AudioClip landSound;
-	public float checkpointVolume = 0.5f;
-	public AudioClip checkpointSound;
-	public float warpVolume = 0.5f;
-	public AudioClip warpSound;
+	public float landVolume = 0.5f; // not implemented yet
+	public AudioClip landSound; // not implemented yet
 	public float respawnVolume = 0.5f;
 	public AudioClip respawnSound;
 	public float switchVolume = 0.5f;
 	public AudioClip switchSound;
-	AudioSource audio;
+    public float deathVolume = 0.5f;
+    public AudioClip deathSound;
+    public float recallVolume = 0.5f;
+    public AudioClip recallSound;
+    AudioSource audio;
+
+    [HideInInspector]
+    public static bool respawnNotDeath = true; // For playing either the respawn or death animation when scene loads. Accessed and set to false in the KillZone script.
 
     // Use this for initialization
     void Start()
@@ -124,6 +125,15 @@ public class PlayerController : MonoBehaviour
 
 		// For playing sound effects
 		audio = GetComponent<AudioSource>();
+
+        if (respawnNotDeath == true)
+        {
+            audio.PlayOneShot(respawnSound, respawnVolume);
+        }
+        else
+        {
+            audio.PlayOneShot(deathSound, deathVolume);
+        }
     }
 
     // Update is called once per frame
@@ -170,22 +180,24 @@ public class PlayerController : MonoBehaviour
             }
             
 		else if (canWarp == true && shootAnimation == true && controller.isGrounded)
-			{
-				// Play Idle animation
-				 // Same name as it is in the Animator
-                animator.SetBool("move", false);
-			}
+		{
+			// Play Idle animation
+				// Same name as it is in the Animator
+            animator.SetBool("move", false);
+		}
 
 		}
 		if (Input.GetKeyDown(KeyCode.R))
 		{
 			if (canWarp == true)
 			{
-				canWarp = false;
+                respawnNotDeath = true; // Set to true if respawning.
+                canWarp = false;
 			    animator.SetTrigger("warp"); // Same name as it is in the Animator
-				StartCoroutine(WaitForWarp()); // Calls WaitForWarp function and waits
-                
-			}	
+                audio.PlayOneShot(recallSound, recallVolume);
+                StartCoroutine(WaitForWarp()); // Calls WaitForWarp function and waits
+                //audio.PlayOneShot(respawnSound, respawnVolume);
+            }	
 		}
 		// For firing projectile
 		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) // Return and Spacebar fire projectile
@@ -231,11 +243,15 @@ public class PlayerController : MonoBehaviour
         // controller.isGrounded returns true of the player is on the ground
         if (controller.isGrounded && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) // 'w' and up arrow will jump
         {
+            audio.PlayOneShot(jumpSound, jumpVolume);
+
             animator.SetBool("grounded", false);            
             velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity); // Jump calculation provided by Prime31
 
             // Play Jump animation
            animator.SetTrigger("jump"); // Same name as it is in the Animator
+
+            audio.PlayOneShot(jumpSound, jumpVolume);
         }
         
         velocity.y += gravity * Time.deltaTime; // Add gravity to y-direction velocity
@@ -256,6 +272,7 @@ public class PlayerController : MonoBehaviour
 	{
 		yield return new WaitForSecondsRealtime(0.75f);
 		killZone.LoadScenesAndCheckpoints(); // LoadScenesAndCheckpoints function in the KillZone Script
+        audio.PlayOneShot(respawnSound, respawnVolume);
         canWarp = true;
 	}
 
@@ -276,6 +293,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("dLight", true); //swap dimesnions for animator
             animator.SetBool("dDark", false);
             inDarkDimension = false; // Switch bool
+
+            audio.PlayOneShot(switchSound, switchVolume);
         }
         else if (inDarkDimension == false) // In light dimension
         {
@@ -284,6 +303,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Light", false);
             animator.SetBool("dDark", true);
             inDarkDimension = true; // Switch bool
+
+            audio.PlayOneShot(switchSound, switchVolume);
         }
     }
 

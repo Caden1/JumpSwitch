@@ -6,17 +6,28 @@ public class KillZone : MonoBehaviour
 {
     public PlayerController player;
 
+    // For death sound
+    public float deathVolume = 0.5f;
+    public AudioClip deathSound;
+    AudioSource audio;
+
     // Use this for initialization
     void Start ()
     {
         player = FindObjectOfType<PlayerController>();
+
+        audio = GetComponent<AudioSource>();
     }
 		
     void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.tag == "Player") 
 		{
-			LoadScenesAndCheckpoints ();
+            audio.PlayOneShot(deathSound, deathVolume);
+
+            PlayerController.respawnNotDeath = false; // Set to false if the player dies.
+
+            LoadScenesAndCheckpoints ();
 		}
 	}
 
@@ -148,8 +159,12 @@ public class KillZone : MonoBehaviour
 		else if (CheckPoint.checkPoint6Active == true) 
 		{
 			player.transform.position = GameObject.Find ("CheckPoint6").transform.position;
-		} 
-		else
+		}
+        else if (CheckPoint.checkPoint7Active == true)
+        {
+            player.transform.position = GameObject.Find("CheckPoint7").transform.position;
+        }
+        else
 		{
 			SceneManager.LoadScene("6Tower2"); // Loads the scene by name
 		}

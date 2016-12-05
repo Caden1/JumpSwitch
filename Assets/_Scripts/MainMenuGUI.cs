@@ -58,10 +58,17 @@ public class MainMenuGUI : MonoBehaviour
             }
         }
 
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 30, 100, 30), "Controls"))
+        {
+            audio.PlayOneShot(buttonClick, 2f);
+
+            Invoke("ControlsLoad", 0.3f); // Delays load for 0.3 seconds.
+        }
+
         if ((GameControl.playerProfile == 1 && GameControl.beatGame1 == true) || (GameControl.playerProfile == 2 && GameControl.beatGame2 == true)
             || (GameControl.playerProfile == 3 && GameControl.beatGame3 == true)) // Player has beaten the game.
         {
-            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 40, 100, 30), "Level Select"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 80, 100, 30), "Level Select"))
             {
 				audio.PlayOneShot(buttonClick, 2f);
 
@@ -80,7 +87,7 @@ public class MainMenuGUI : MonoBehaviour
         {
 			audio.PlayOneShot(buttonClick, 2f);
 
-			Invoke ("ProfileSelect", 0.3f); // Delays load for 0.3 seconds.
+			Invoke ("ProfileSelectLoad", 0.3f); // Delays load for 0.3 seconds.
         }
     }
 
@@ -94,7 +101,12 @@ public class MainMenuGUI : MonoBehaviour
 		SceneManager.LoadScene("1Prison1"); // Loads the scene by name
 	}
 
-	private void LevelSelectLoad()
+    private void ControlsLoad()
+    {
+        SceneManager.LoadScene("Controls"); // Loads the scene by name
+    }
+
+    private void LevelSelectLoad()
 	{
 		SceneManager.LoadScene("LevelSelect"); // Loads the scene by name
 	}
