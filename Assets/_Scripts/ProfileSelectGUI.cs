@@ -46,7 +46,13 @@ public class ProfileSelectGUI : MonoBehaviour
 
 			Invoke ("MainMenuLoad", 0.3f); // Delays load for 0.3 seconds.
         }
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 110, 100, 30), "Quit"))
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 110, 100, 30), "Credits"))
+        {
+            audio.PlayOneShot(buttonClick, 2f);
+
+            Invoke("Credits", 0.3f);
+        }
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 180, 100, 30), "Quit"))
         {
             audio.PlayOneShot(buttonClick, 2f);
 
@@ -62,5 +68,10 @@ public class ProfileSelectGUI : MonoBehaviour
     private void QuitGame()
     {
         Application.Quit(); // Quits the application
+    }
+
+    private void Credits()
+    {
+        SceneManager.LoadScene("Credits"); // Loads the scene by name
     }
 }
