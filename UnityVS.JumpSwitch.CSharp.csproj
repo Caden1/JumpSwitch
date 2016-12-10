@@ -86,6 +86,7 @@
     <Compile Include="Assets\_Scripts\CharacterController2D.cs" />
     <Compile Include="Assets\_Scripts\CheckPoint.cs" />
     <Compile Include="Assets\_Scripts\ControlsGUI.cs" />
+    <Compile Include="Assets\_Scripts\CreditsGUI.cs" />
     <Compile Include="Assets\_Scripts\GameControl.cs" />
     <Compile Include="Assets\_Scripts\KillZone.cs" />
     <Compile Include="Assets\_Scripts\LevelSelectGUI.cs" />
